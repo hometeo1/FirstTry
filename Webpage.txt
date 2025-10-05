@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fantasy Portrait — Gallery</title>
+  <meta name="description" content="A small portfolio site showing a fantasy-style recreation." />
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#ff8a00;
+      --muted:#9aa6b2;
+      --glass: rgba(255,255,255,0.03);
+      --maxw:1100px;
+      --radius:16px;
+      --gap:20px;
+      --ff: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--ff);
+      background: linear-gradient(180deg,#051025 0%, #072033 60%, #071a2a 100%);
+      color: #e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    .site{
+      max-width:var(--maxw);
+      margin:32px auto;
+      padding:24px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:24px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      text-decoration:none;
+      color:inherit;
+    }
+    .logo{
+      width:52px;
+      height:52px;
+      border-radius:12px;
+      background: linear-gradient(135deg,#ff9b2f,#ff5d8f);
+      box-shadow: 0 6px 20px rgba(255,138,0,0.12), inset 0 -6px 18px rgba(255,255,255,0.05);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:18px;
+    }
+    nav{display:flex;gap:12px}
+    a.btn {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 16px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:inherit;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:600;
+      transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    a.btn:hover{ transform:translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.45) }
+
+    .hero{
+      background: linear-gradient(180deg, rgba(255,136,0,0.06), rgba(255,92,92,0.02));
+      border-radius:var(--radius);
+      padding:28px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:var(--gap);
+      align-items:center;
+      box-shadow: 0 10px 40px rgba(2,6,23,0.6);
+      overflow:hidden;
+    }
+
+    .hero-left h1{
+      margin:0 0 10px 0;
+      font-size: clamp(22px, 4.6vw, 36px);
+      letter-spacing:-0.5px;
+    }
+    .hero-left p{ margin:0 0 18px 0; color:var(--muted) }
+
+    .cta-row{ display:flex; gap:12px; align-items:center }
+    .cta-primary{
+      padding:12px 18px;
+      background: linear-gradient(90deg,var(--accent), #ff5d8f);
+      border:none;
+      color:#081020;
+      border-radius:12px;
+      font-weight:700;
+      text-decoration:none;
+      box-shadow: 0 8px 26px rgba(255,138,0,0.15);
+    }
+    .cta-ghost{
+      padding:10px 14px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:12px;
+      color:var(--muted);
+      text-decoration:none;
+    }
+
+    .hero-right{
+      position:relative;
+      border-radius:12px;
+      overflow:hidden;
+      min-height:300px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .photo {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.02);
+      transition: transform .9s ease;
+      will-change:transform;
+    }
+    .hero-right:hover .photo{ transform: scale(1.06) }
+
+    main{ margin-top:22px; display:grid; gap:20px }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2,1fr);
+      gap:18px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;
+      padding:18px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.55);
+    }
+    .card h3{ margin-top:0; margin-bottom:8px }
+    .muted{ color:var(--muted); font-size:0.95rem }
+
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    .gallery img{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      border-radius:10px;
+      display:block;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+      transition: transform .22s ease, filter .22s ease;
+    }
+    .gallery img:hover{ transform: translateY(-6px) scale(1.02) }
+
+    footer{
+      margin-top:28px;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    /* Responsive */
+    @media (max-width:920px){
+      .hero{ grid-template-columns: 1fr; }
+      .hero-right{ min-height:260px; order:-1 }
+      .grid{ grid-template-columns: 1fr }
+      .gallery{ grid-template-columns: repeat(2,1fr) }
+    }
+    @media (max-width:520px){
+      .gallery img{ height:150px }
+      .logo{ width:44px; height:44px; font-size:16px }
+    }
+
+    /* subtle floating light */
+    .orb{
+      position:absolute;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      filter: blur(60px);
+      background: radial-gradient(circle at 30% 30%, rgba(255,148,37,0.24), rgba(255,85,120,0.06) 40%, transparent 70%);
+      right:-60px;
+      top:-60px;
+      pointer-events:none;
+      transform: translateZ(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="site" role="main">
+    <header>
+      <a class="brand" href="#" aria-label="Home">
+        <div class="logo" aria-hidden="true">FP</div>
+        <div>
+          <div style="font-weight:700">Fantasy Portraits</div>
+          <div style="font-size:12px;color:var(--muted)">digital art & recreations</div>
+        </div>
+      </a>
+
+      <nav aria-label="Top Navigation">
+        <a class="btn" href="#gallery">Gallery</a>
+        <a class="btn" href="#about">About</a>
+        <a class="btn" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-left">
+        <h1 id="hero-title">Turn your photos into magical, painted scenes</h1>
+        <p class="muted">AI-powered fantasy-style recreations — rich colors, painterly textures, and cinematic lighting. Perfect for prints, avatars, and keepsakes.</p>
+
+        <div class="cta-row">
+          <a class="cta-primary" href="#contact">Request a recreation</a>
+          <a class="cta-ghost" href="#gallery">See examples</a>
+        </div>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <div class="orb" aria-hidden="true"></div>
+        <!-- Replace src with your image path. Example: images/your-fantasy-image.png -->
+        <img class="photo" src="images/your-fantasy-image.png" alt="Fantasy-style portrait in a slot canyon" />
+      </div>
+    </section>
+
+    <main>
+      <div class="grid">
+        <article class="card" id="gallery" aria-labelledby="gallery-title">
+          <h3 id="gallery-title">Gallery</h3>
+          <p class="muted">A few samples of fantasy recreations. Replace placeholders with your images.</p>
+
+          <div class="gallery" role="list">
+            <img role="listitem" src="images/your-fantasy-image.png" alt="Fantasy portrait 1" />
+            <img role="listitem" src="images/sample-2.jpg" alt="Fantasy portrait 2" />
+            <img role="listitem" src="images/sample-3.jpg" alt="Fantasy portrait 3" />
+          </div>
+        </article>
+
+        <aside class="card" id="about" aria-labelledby="about-title">
+          <h3 id="about-title">About this style</h3>
+          <p class="muted">This fantasy style blends warm canyon tones with soft painterly brushwork. The result is convincing yet stylized — great for wall art and framed prints.</p>
+
+          <h4 style="margin-top:12px">What's included</h4>
+          <ul class="muted">
+            <li>High-resolution artwork (JPEG/PNG)</li>
+            <li>Optional printable crop and frame mockup</li>
+            <li>License for personal use / prints</li>
+          </ul>
+        </aside>
+      </div>
+
+      <section class="card" id="contact" aria-labelledby="contact-title">
+        <h3 id="contact-title">Get in touch</h3>
+        <p class="muted">Tell me about the photo you'd like reimagined and any style notes (colors, mood, crop). I’ll reply with options & pricing.</p>
+
+        <form onsubmit="submitContact(event)" style="display:flex;gap:12px;flex-wrap:wrap;">
+          <input required name="name" type="text" placeholder="Your name" style="flex:1;min-width:220px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit" />
+          <input required name="email" type="email" placeholder="Email" style="flex:1;min-width:220px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit" />
+          <textarea name="message" placeholder="Tell me about the photo & desired style" style="flex-basis:100%;min-height:100px;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit"></textarea>
+
+          <div style="display:flex;gap:10px;align-items:center;">
+            <button type="submit" class="cta-primary">Send inquiry</button>
+            <a href="mailto:you@example.com?subject=Fantasy%20recreation%20request" class="cta-ghost">Or email directly</a>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div>© <strong>Fantasy Portraits</strong> — made with care</div>
+      <div class="muted">Built as a single-file demo • Replace images in <code>images/</code></div>
+    </footer>
+  </div>
+
+  <script>
+    // Small helper: on-submit opens a mailto with form data as fallback
+    function submitContact(e){
+      e.preventDefault();
+      const f = e.target;
+      const name = encodeURIComponent(f.name.value.trim());
+      const email = encodeURIComponent(f.email.value.trim());
+      const message = encodeURIComponent(f.message.value.trim());
+      if(!name || !email){ alert('Please enter name and email'); return; }
+      const subject = encodeURIComponent('Fantasy recreation request from ' + name);
+      const body = encodeURIComponent('Name: ' + name + '\\nEmail: ' + email + '\\n\\nMessage:\\n' + message);
+      // Try using mailto to open user's email client
+      window.location.href = `mailto:you@example.com?subject=${subject}&body=${body}`;
+    }
+
+    // Nice small progressive enhancement: keyboard focus style for accessibility
+    (function(){
+      const body = document.body;
+      window.addEventListener('keydown', (e)=>{
+        if(e.key === 'Tab') body.classList.add('show-focus');
+      }, {once:true});
+    })();
+  </script>
+</body>
+</html>
+
